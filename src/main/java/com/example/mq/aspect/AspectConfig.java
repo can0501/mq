@@ -17,7 +17,7 @@ public class AspectConfig {
 
     @Pointcut("execution(public * com.example.mq.controller.asdasdasd.*(..)))")
     public void BrokerAspect(){
-        System.out.println("切面构造方法");
+        System.out.println("定义一个切点，在切入点表达式可以引用");
     }
 
 
