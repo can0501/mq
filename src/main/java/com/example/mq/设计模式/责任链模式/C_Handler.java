@@ -1,0 +1,19 @@
+package com.example.mq.设计模式.责任链模式;
+
+/**
+ * @author 钟金灿
+ * @since 2021/6/20
+ */
+public class C_Handler  extends Handler {
+
+    @Override
+    public Boolean doAction(String a) {
+        System.out.println("c do action");
+        if (a.equals("abc")) {
+
+
+            return true;
+        }
+        return false;
+    }
+}

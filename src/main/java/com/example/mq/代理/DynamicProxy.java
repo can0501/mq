@@ -18,9 +18,11 @@ public class DynamicProxy {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+//            vailda
             System.out.println("before");
             Object invoke = method.invoke(target, args);
             System.out.println("after");
+            float s=-4;
             return invoke;
         }
     }
@@ -32,6 +34,9 @@ public class DynamicProxy {
         Service proxyTarget = (Service) Proxy.newProxyInstance(service.getClass().getClassLoader(), service.getClass().getInterfaces(), myProxyHandler);
         String zhong = proxyTarget.doThing("zhong");
         System.out.println("res:" + zhong);
+        int[] a = {1, 2};
+        System.out.println(a.length);
+
 
     }
 
