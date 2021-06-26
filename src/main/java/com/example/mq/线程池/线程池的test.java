@@ -1,4 +1,4 @@
-package com.example.mq.mq.direct;
+package com.example.mq.线程池;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -15,16 +15,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 
 import java.io.IOException;
+import java.util.concurrent.*;
 
 
 //@Configuration
-public class asdsa {
+public class 线程池的test {
 
     @Autowired
     private Environment env;
@@ -89,9 +91,46 @@ public class asdsa {
         });
         return rabbitTemplate;
     }
+
     @Bean
-    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory){
+    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
         return rabbitAdmin;
     }
+
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService threadPoolExecutor = Executors.newCachedThreadPool();  // 最简单，不过不推荐
+        ThreadPoolExecutor threadPoolExecutor2 = new ThreadPoolExecutor(1,  //核心
+                1,                                                      //最大线程池
+                1L,                                                       //存活时间
+                TimeUnit.MICROSECONDS,                                                         //超时时间
+                new LinkedBlockingDeque<>(10),                                      //队列
+                Executors.defaultThreadFactory(),                                      //线程池工厂，维护线程名字，提供创建线程方法
+                 new ThreadPoolExecutor.AbortPolicy());                                 //拒绝策列，默认是抛异常
+        threadPoolExecutor2.allowCoreThreadTimeOut(true);
+        for (int i = 0; i < 1; i++) {
+             threadPoolExecutor2.execute(() -> {
+
+            });
+        }
+
+        Thread.sleep(500L);
+
+        Thread.sleep(500L);
+        for (int i = 0; i < 1; i++) {
+            threadPoolExecutor2.execute(() -> {
+
+            });
+        }
+
+
+    }
+
+    static class my_syncQueue<E> extends SynchronousQueue<E> {
+        @Override
+        public boolean offer(E e) {
+            return false;
+        }
+    }
+
 }
