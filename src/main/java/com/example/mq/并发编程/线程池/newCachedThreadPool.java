@@ -1,6 +1,5 @@
-package com.example.mq.线程池;
+package com.example.mq.并发编程.线程池;
 
-import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;

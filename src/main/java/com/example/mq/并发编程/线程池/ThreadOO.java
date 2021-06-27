@@ -1,9 +1,5 @@
-package com.example.mq.线程池;
+package com.example.mq.并发编程.线程池;
 
-import org.springframework.aop.framework.AopContext;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.awt.print.PrinterGraphics;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
