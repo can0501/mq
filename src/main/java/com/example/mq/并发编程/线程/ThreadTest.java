@@ -90,6 +90,27 @@ public class ThreadTest {
 
     }
 
+    @Test
+    public void wait_my() throws InterruptedException {
+        Object o = new Object();
+        Thread thread = new Thread(() -> {
+            synchronized (o) {
+                System.out.println("in to");
+                try {
+                    o.wait(2000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("out to");
+            }
+        });
+        thread.start();
+
+        Thread.sleep(22777722L);
+        System.out.println(thread.getState());
+
+    }
+
     public static void main(String[] args) throws InterruptedException {
         Object o = new Object();
         Object o2 = new Object();
