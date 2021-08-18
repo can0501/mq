@@ -22,6 +22,8 @@ public class MqApplication {
 
     @RequestMapping(value = "a", method = RequestMethod.GET)
     public String a() {
+        System.out.println(1);
+
         while (1 == 1) {
 
         }

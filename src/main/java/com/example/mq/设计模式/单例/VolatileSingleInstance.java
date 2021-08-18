@@ -1,6 +1,5 @@
 package com.example.mq.设计模式.单例;
 
-import com.sun.org.apache.xpath.internal.objects.XNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,7 +9,7 @@ public class VolatileSingleInstance {
 
 
     //double check
-    public static SingleInstance getInstance(){
+    public static SingleInstance getInstance() {
 
         if (instance == null) {
             synchronized (VolatileSingleInstance.class) {
@@ -31,14 +30,12 @@ public class VolatileSingleInstance {
         ExecutorService executor = Executors.newCachedThreadPool();
 
 
-        for(int i=0;i<1111;i++){
-            executor.execute(()->{
+        for (int i = 0; i < 1111; i++) {
+            executor.execute(() -> {
                 System.out.println(VolatileSingleInstance.getInstance().hashCode());
 
             });
         }
-
-
 
 
     }
