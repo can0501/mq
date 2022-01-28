@@ -25,6 +25,7 @@ public class ThreadLocal {
 
     @Test
     public void b() {
+ 
         ExecutorService executorService = Executors.newCachedThreadPool();
 
         List<CompletableFuture<String>> list = new ArrayList<>();
