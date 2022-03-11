@@ -1,12 +1,8 @@
 package com.example.mq.并发编程.juc;
 
-import com.example.mq.mq.direct.R;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -33,16 +29,16 @@ public class Lock {
 
             executorService.execute(() -> {
                 try {
-                    countDownLatch.countDown();
+                    Thread.sleep(4000L);
                     System.out.println("A");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-
+                    countDownLatch.countDown();
                 }
             });
         }
-//        countDownLatch.await();
+        countDownLatch.await(2L, TimeUnit.SECONDS);
 
         System.out.println(1);
 
