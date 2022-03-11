@@ -62,9 +62,16 @@ public class ThreadLocalTest {
                     threadLocal.set(1);
 
                     Thread thread = new Thread(() -> {
-                        System.out.println(threadLocal.get());
+                        System.out.println("before" + threadLocal.get());
+                        try {
+                            Thread.sleep(1000L);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("after" + threadLocal.get());
                     });
                     thread.start();
+                    threadLocal.set(2);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -74,8 +81,10 @@ public class ThreadLocalTest {
         }
 
         for (CompletableFuture<String> stringCompletableFuture : list) {
-            System.out.println(stringCompletableFuture.get( ));
+//            System.out.println();
+            stringCompletableFuture.get();
         }
+
 
     }
 
