@@ -1,7 +1,5 @@
 package com.example.mq.设计模式.观察者;
 
-import com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +9,13 @@ import java.util.List;
  */
 public class Observerable {
 
-    private List<Observer> observers=new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
 
     public void setObservers(Observer observer) {
         observers.add(observer);
     }
 
-    public void update (){
+    public void update() {
         System.out.println("被观察者doAction");
         this.notifyObserver();
     }
