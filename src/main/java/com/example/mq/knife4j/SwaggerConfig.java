@@ -52,7 +52,7 @@ public class SwaggerConfig {
     }
 
 
-    @Bean
+//    @Bean
     public ModelPropertyBuilderPlugin getIdescEnumModelPropertyBuilderPlugin() {
         return new ModelPropertyBuilderPlugin() {
 

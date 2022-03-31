@@ -12,10 +12,13 @@ import lombok.Data;
 @ApiModel
 public class A {
 
-    @ApiModelProperty(value = "asdasdsada" ,example = "枚举1")
-    private AEnum aEnum;
+    @ApiModelProperty(value = "asdasdsada")
+    private AEnum anEnum;
 
-    @ApiModelProperty(value = "数字",example = "1")
+    @ApiModelProperty(value = "数字" )
     private Integer intttt;
+
+//    @ApiModelProperty(value = "bbbbbb")
+    private Benum benum;
 
 }

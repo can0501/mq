@@ -10,17 +10,17 @@ import lombok.Getter;
  */
 @JsonSerialize(using = IDescEnumSerializer.class)
 @JsonDeserialize(using = IDescEnumDeserializer.class)
-public enum AEnum implements IDescEnum {
-    枚举1(1, "枚举1"),
+public enum Benum implements IDescEnum {
+    枚举B1(1, "枚举B1"),
 
-    枚举2(2, "枚举2"),
+    枚举B2(2, "枚举B2"),
     ;
     @Getter
     private Integer value;
     @Getter
     private String desc;
 
-    AEnum(int i, String 枚举1) {
+    Benum(int i, String 枚举1) {
         this.value = i;
         this.desc = 枚举1;
     }
