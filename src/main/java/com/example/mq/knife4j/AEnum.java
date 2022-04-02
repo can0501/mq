@@ -8,8 +8,7 @@ import lombok.Getter;
  * @author 钟金灿
  * @since 2022/3/30
  */
-@JsonSerialize(using = IDescEnumSerializer.class)
-@JsonDeserialize(using = IDescEnumDeserializer.class)
+
 public enum AEnum implements IDescEnum {
     枚举1(1, "枚举1"),
 

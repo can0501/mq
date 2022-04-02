@@ -1,9 +1,13 @@
 package com.example.mq.knife4j;
 
 import com.fasterxml.classmate.ResolvedType;
+import com.fasterxml.classmate.TypeResolver;
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
+import springfox.documentation.builders.ModelPropertyBuilder;
 import springfox.documentation.schema.Annotations;
 import springfox.documentation.service.AllowableListValues;
 import springfox.documentation.spi.DocumentationType;
@@ -11,19 +15,24 @@ import springfox.documentation.spi.schema.ModelPropertyBuilderPlugin;
 import springfox.documentation.spi.schema.contexts.ModelPropertyContext;
 import springfox.documentation.swagger.schema.ApiModelProperties;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static springfox.documentation.schema.Collections.collectionElementType;
+import static springfox.documentation.schema.Collections.isContainerType;
 
 /**
  * @author 钟金灿
  * @since 2022/3/31
  */
-@Component
+//@Component
 public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugin {
     @Override
     public void apply(ModelPropertyContext context) {
         Optional<ApiModelProperty> annotation = Optional.absent();
+
 
         if (context.getAnnotatedElement().isPresent()) {
             annotation = annotation.or(ApiModelProperties.findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
@@ -35,19 +44,36 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
         }
 
         final Class<?> rawPrimaryType = context.getBeanPropertyDefinition().get().getRawPrimaryType();
-        //过滤得到目标类型
-        if (annotation.isPresent() && IDescEnum.class.isAssignableFrom(rawPrimaryType)) {
+        ResolvedType resolve = context.getResolver().resolve(rawPrimaryType);
 
-            //获取CodedEnum的code值
+        List<ResolvedType> typeParameters = resolve.getTypeParameters();
+        if (isContainerType(resolve)) {
+            ModelPropertyBuilder builder = context.getBuilder();
+            Field type = ReflectionUtils.findField(ModelPropertyBuilder.class, "type");
+            ReflectionUtils.makeAccessible(type);
+            ResolvedType field = (ResolvedType) ReflectionUtils.getField(type, builder);
+            field.getErasedType();
+            ResolvedType itemType = collectionElementType(field);
+            if (IDescEnum.class.isAssignableFrom(itemType.getErasedType())) {
+                java.util.Optional<ApiModelProperty> optionalApiModelProperty = java.util.Optional.ofNullable(annotation.orNull());
+                IDescEnum[] values = (IDescEnum[]) itemType.getErasedType().getEnumConstants();
+                final List<String> displayValueList = Arrays.stream(values).map(codedEnum -> codedEnum.getValue() + ":" + codedEnum.getDesc()).collect(Collectors.toList());
+                final List<String> valuesList = Arrays.stream(values).map(codedEnum -> codedEnum.getValue().toString()).collect(Collectors.toList());
+                final AllowableListValues allowableListValues = new AllowableListValues(valuesList, int.class.getSimpleName());
+                final ResolvedType resolvedType = context.getResolver().resolve(int.class);
+                context.getBuilder().description(optionalApiModelProperty.map(ApiModelProperty::value).orElse("") + ":" + displayValueList)
+//                        .type(resolvedType)
+                        .allowableValues(allowableListValues);
+            }
+        }
+        if (IDescEnum.class.isAssignableFrom(rawPrimaryType)) {
+            java.util.Optional<ApiModelProperty> optionalApiModelProperty = java.util.Optional.ofNullable(annotation.orNull());
             IDescEnum[] values = (IDescEnum[]) rawPrimaryType.getEnumConstants();
             final List<String> displayValueList = Arrays.stream(values).map(codedEnum -> codedEnum.getValue() + ":" + codedEnum.getDesc()).collect(Collectors.toList());
             final List<String> valuesList = Arrays.stream(values).map(codedEnum -> codedEnum.getValue().toString()).collect(Collectors.toList());
             final AllowableListValues allowableListValues = new AllowableListValues(valuesList, rawPrimaryType.getTypeName());
-            //固定设置为int类型
-            java.util.Optional<String> example = java.util.Optional.ofNullable(annotation.get().example());
             final ResolvedType resolvedType = context.getResolver().resolve(int.class);
-            context.getBuilder().description(annotation.get().value() + ":" + displayValueList)
-                    .example((Object) example.orElse(valuesList.get(0)))
+            context.getBuilder().description(optionalApiModelProperty.map(ApiModelProperty::value).orElse("") + ":" + displayValueList)
                     .type(resolvedType).allowableValues(allowableListValues);
         }
     }
@@ -56,6 +82,19 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
     @Override
     public boolean supports(DocumentationType documentationType) {
         return true;
+    }
+
+    static Function<ApiModelProperty, ResolvedType> toType(final TypeResolver resolver) {
+        return new Function<ApiModelProperty, ResolvedType>() {
+            @Override
+            public ResolvedType apply(ApiModelProperty annotation) {
+                try {
+                    return resolver.resolve(Class.forName(annotation.dataType()));
+                } catch (ClassNotFoundException e) {
+                    return resolver.resolve(Object.class);
+                }
+            }
+        };
     }
 
 }

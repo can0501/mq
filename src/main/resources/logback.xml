@@ -25,14 +25,15 @@
 
 
     <!-- Spring日志级别控制  -->
-    <logger name="org.springframework"  />
+<!--    <logger name="org.springframework"  />-->
 
-    <logger name="com.example.mq">
+<!--    <logger name="com.example.mq">-->
 <!--        <appender-ref ref="console2"/>-->
-    </logger>
+<!--    </logger>-->
 
     <root level="debug">
         <appender-ref ref="console2"/>
+        <appender-ref ref="console"/>
         <!--        <appender-ref ref="GELF"/>-->
     </root>
 

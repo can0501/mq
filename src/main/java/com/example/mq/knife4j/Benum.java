@@ -8,8 +8,7 @@ import lombok.Getter;
  * @author 钟金灿
  * @since 2022/3/30
  */
-@JsonSerialize(using = IDescEnumSerializer.class)
-@JsonDeserialize(using = IDescEnumDeserializer.class)
+
 public enum Benum implements IDescEnum {
     枚举B1(1, "枚举B1"),
 
