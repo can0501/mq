@@ -25,7 +25,7 @@ public class A {
 
     private List<AEnum> enumList;
 
-    @ApiModelProperty(value = "enumList2")
+    @ApiModelProperty(value = "枚举数组")
     private List<AEnum> enumList2;
 
 }

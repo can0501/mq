@@ -49,6 +49,8 @@ public class EnumDescriptionExpandedParameterBuilder implements ExpandedParamete
 
         ResolvedType resolved = this.resolver.resolve(context.getFieldType());
 
+        String name = context.getParameterBuilder().build().getName();
+
         if (isContainerType(resolved)) {
             resolved = Optional.ofNullable(resolved = context.getFieldType()).orElse(resolved);
             ResolvedType itemType = collectionElementType(resolved);
@@ -58,16 +60,20 @@ public class EnumDescriptionExpandedParameterBuilder implements ExpandedParamete
                     return f1.getValue().toString();
                 }).collect(Collectors.toList()), "LIST"));
                 context.getParameterBuilder()
-                        .description(apiModelPropertyOptional.map(ApiModelProperty::value).orElse("") + ":" + enumValues(itemType.getErasedType()))
+                        .description(getDescription(apiModelPropertyOptional, itemType.getErasedType(), name))
                         .modelRef(new ModelRef(int.class.getSimpleName(), itemModel));
             }
         }
         if (IDescEnum.class.isAssignableFrom(erasedType)) {
             context.getParameterBuilder()
-                    .description(apiModelPropertyOptional.map(ApiModelProperty::value).orElse("") + ":" + enumValues(erasedType))
+                    .description(getDescription(apiModelPropertyOptional, erasedType, name))
                     .allowableValues(allowableListValues(erasedType))
                     .modelRef(new ModelRef(int.class.getSimpleName()));
         }
+    }
+
+    private String getDescription(Optional<ApiModelProperty> apiModelPropertyOptional, Class<?> erasedType, String name) {
+        return apiModelPropertyOptional.map(ApiModelProperty::value).orElse(name) + ":" + enumValues(erasedType);
     }
 
     @Override

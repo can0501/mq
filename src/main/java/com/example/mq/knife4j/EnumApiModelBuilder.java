@@ -25,16 +25,6 @@ import static springfox.documentation.swagger.common.SwaggerPluginSupport.plugin
 
 @Component
 public class EnumApiModelBuilder implements ModelBuilderPlugin {
-    private final TypeResolver typeResolver;
-    private final TypeNameExtractor typeNameExtractor;
-
-    @Autowired
-    public EnumApiModelBuilder(
-            TypeResolver typeResolver,
-            TypeNameExtractor typeNameExtractor) {
-        this.typeResolver = typeResolver;
-        this.typeNameExtractor = typeNameExtractor;
-    }
 
     @Override
     public void apply(ModelContext context) {
@@ -54,11 +44,6 @@ public class EnumApiModelBuilder implements ModelBuilderPlugin {
             }
         });
     }
-
-    private Class<?> forClass(ModelContext context) {
-        return typeResolver.resolve(context.getType()).getErasedType();
-    }
-
 
     @Override
     public boolean supports(DocumentationType delimiter) {

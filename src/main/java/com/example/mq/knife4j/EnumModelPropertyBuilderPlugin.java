@@ -30,6 +30,7 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
     @Override
     public void apply(ModelPropertyContext context) {
         Optional<ApiModelProperty> annotation = Optional.absent();
+        String name = context.getBuilder().build().getName();
 
         if (context.getAnnotatedElement().isPresent()) {
             annotation = annotation.or(ApiModelProperties.findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
@@ -45,20 +46,14 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
 
         if (isContainerType(resolve)) {
             ModelPropertyBuilder builder = context.getBuilder();
-            Field type = ReflectionUtils.findField(ModelPropertyBuilder.class, "type");
-            ReflectionUtils.makeAccessible(type);
-            ResolvedType field = (ResolvedType) ReflectionUtils.getField(type, builder);
-            field.getErasedType();
-            ResolvedType itemType = collectionElementType(field);
+            ResolvedType itemType = collectionElementType(builder.build().getType());
             if (IDescEnum.class.isAssignableFrom(itemType.getErasedType())) {
                 java.util.Optional<ApiModelProperty> optionalApiModelProperty = java.util.Optional.ofNullable(annotation.orNull());
                 IDescEnum[] values = (IDescEnum[]) itemType.getErasedType().getEnumConstants();
                 final List<String> displayValueList = Arrays.stream(values).map(codedEnum -> codedEnum.getValue() + ":" + codedEnum.getDesc()).collect(Collectors.toList());
                 final List<String> valuesList = Arrays.stream(values).map(codedEnum -> codedEnum.getValue().toString()).collect(Collectors.toList());
                 final AllowableListValues allowableListValues = new AllowableListValues(valuesList, int.class.getSimpleName());
-                final ResolvedType resolvedType = context.getResolver().resolve(int.class);
-                context.getBuilder().description(optionalApiModelProperty.map(ApiModelProperty::value).orElse("") + ":" + displayValueList)
-//                        .type(resolvedType)
+                context.getBuilder().description(getDesc(name, optionalApiModelProperty) + ":" + displayValueList)
                         .allowableValues(allowableListValues);
             }
         }
@@ -69,9 +64,13 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
             final List<String> valuesList = Arrays.stream(values).map(codedEnum -> codedEnum.getValue().toString()).collect(Collectors.toList());
             final AllowableListValues allowableListValues = new AllowableListValues(valuesList, rawPrimaryType.getTypeName());
             final ResolvedType resolvedType = context.getResolver().resolve(int.class);
-            context.getBuilder().description(optionalApiModelProperty.map(ApiModelProperty::value).orElse("") + ":" + displayValueList)
+            context.getBuilder().description(getDesc(name, optionalApiModelProperty) + ":" + displayValueList)
                     .type(resolvedType).allowableValues(allowableListValues);
         }
+    }
+
+    private String getDesc(String name, java.util.Optional<ApiModelProperty> optionalApiModelProperty) {
+        return optionalApiModelProperty.map(ApiModelProperty::value).orElse(name);
     }
 
     @Override
