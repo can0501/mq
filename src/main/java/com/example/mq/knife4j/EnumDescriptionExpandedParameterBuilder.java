@@ -28,7 +28,7 @@ import static springfox.documentation.schema.Collections.isContainerType;
  * @author 钟金灿
  * @since 2022/3/31
  */
-//@Component
+@Component
 public class EnumDescriptionExpandedParameterBuilder implements ExpandedParameterBuilderPlugin {
 
     private final TypeResolver resolver;

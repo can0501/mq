@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableRabbit
 @SpringBootApplication
 @RestController
-@RequestMapping("a")
+//@RequestMapping("a")
 @Slf4j
 public class MqApplication {
 

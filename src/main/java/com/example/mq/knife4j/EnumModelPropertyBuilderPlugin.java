@@ -1,8 +1,6 @@
 package com.example.mq.knife4j;
 
 import com.fasterxml.classmate.ResolvedType;
-import com.fasterxml.classmate.TypeResolver;
-import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
@@ -27,12 +25,11 @@ import static springfox.documentation.schema.Collections.isContainerType;
  * @author 钟金灿
  * @since 2022/3/31
  */
-//@Component
+@Component
 public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugin {
     @Override
     public void apply(ModelPropertyContext context) {
         Optional<ApiModelProperty> annotation = Optional.absent();
-
 
         if (context.getAnnotatedElement().isPresent()) {
             annotation = annotation.or(ApiModelProperties.findApiModePropertyAnnotation(context.getAnnotatedElement().get()));
@@ -46,7 +43,6 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
         final Class<?> rawPrimaryType = context.getBeanPropertyDefinition().get().getRawPrimaryType();
         ResolvedType resolve = context.getResolver().resolve(rawPrimaryType);
 
-        List<ResolvedType> typeParameters = resolve.getTypeParameters();
         if (isContainerType(resolve)) {
             ModelPropertyBuilder builder = context.getBuilder();
             Field type = ReflectionUtils.findField(ModelPropertyBuilder.class, "type");
@@ -78,23 +74,9 @@ public class EnumModelPropertyBuilderPlugin implements ModelPropertyBuilderPlugi
         }
     }
 
-
     @Override
     public boolean supports(DocumentationType documentationType) {
         return true;
-    }
-
-    static Function<ApiModelProperty, ResolvedType> toType(final TypeResolver resolver) {
-        return new Function<ApiModelProperty, ResolvedType>() {
-            @Override
-            public ResolvedType apply(ApiModelProperty annotation) {
-                try {
-                    return resolver.resolve(Class.forName(annotation.dataType()));
-                } catch (ClassNotFoundException e) {
-                    return resolver.resolve(Object.class);
-                }
-            }
-        };
     }
 
 }

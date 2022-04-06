@@ -14,10 +14,10 @@ import java.util.List;
 @ApiModel
 public class A {
 
-    @ApiModelProperty(value = "asdasdsada")
+//    @ApiModelProperty(value = "asdasdsada")
     private AEnum anEnum;
 
-    @ApiModelProperty(value = "数字" )
+//    @ApiModelProperty(value = "数字" )
     private Integer intttt;
 
 //    @ApiModelProperty(value = "bbbbbb")
