@@ -29,11 +29,11 @@ import static springfox.documentation.schema.Collections.isContainerType;
  * @since 2022/3/31
  */
 @Component
-public class EnumDescriptionExpandedParameterBuilder implements ExpandedParameterBuilderPlugin {
+public class EnumExpandedParameterBuilder implements ExpandedParameterBuilderPlugin {
 
     private final TypeResolver resolver;
 
-    public EnumDescriptionExpandedParameterBuilder(
+    public EnumExpandedParameterBuilder(
             TypeResolver typeResolver) {
         this.resolver = typeResolver;
 
