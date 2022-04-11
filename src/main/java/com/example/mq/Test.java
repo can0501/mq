@@ -1,5 +1,6 @@
 package com.example.mq;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -60,6 +61,12 @@ public class Test {
     @org.junit.Test
     public void test233(){
         System.out.println(new BigDecimal("0.00").intValue());
+
+    }
+
+    @org.junit.Test
+    public void test2333(){
+        Lists.newArrayListWithExpectedSize(12);
 
     }
 }
