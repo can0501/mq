@@ -69,4 +69,16 @@ public class Test {
         Lists.newArrayListWithExpectedSize(12);
 
     }
+
+    @org.junit.Test
+    public void test23333(){
+        Short s = (short) 1;
+
+
+        System.out.println(s.equals((short) 2));
+
+
+        System.out.println(s.equals((short) 1));
+
+    }
 }

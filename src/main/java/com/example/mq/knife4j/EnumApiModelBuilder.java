@@ -23,7 +23,7 @@ import static springfox.documentation.schema.Collections.collectionElementType;
 import static springfox.documentation.schema.Collections.isContainerType;
 import static springfox.documentation.swagger.common.SwaggerPluginSupport.pluginDoesApply;
 
-@Component
+//@Component
 public class EnumApiModelBuilder implements ModelBuilderPlugin {
 
     @Override
