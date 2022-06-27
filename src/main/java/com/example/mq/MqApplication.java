@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@EnableRabbit
+//@EnableRabbit
 @SpringBootApplication
-@RestController
-@RequestMapping("a")
+//@RestController
+//@RequestMapping("a")
 public class MqApplication {
 
     public static void main(String[] args) {
@@ -23,12 +23,15 @@ public class MqApplication {
     @RequestMapping(value = "a", method = RequestMethod.GET)
     public String a() {
         System.out.println(1);
-
-        while (1 == 1) {
-
-        }
+        return "sad";
     }
 
+
+    @RequestMapping(value = "b", method = RequestMethod.GET)
+    public String b() {
+        System.out.println(1);
+        return "sad";
+    }
 
 
 }
