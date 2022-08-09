@@ -45,12 +45,13 @@ public class asdasdasd {
     @Value("${qaq}")
     String qaq;
     @GetMapping("qaq")
-    public String qaq() {
+    public String qaq(HttpServletRequest request) {
 
         System.out.println("aspect");
 //        if (1 == 1) {
 //            throw new RuntimeException("asdasdas");
 //        }
-        return qaq;
+        System.out.println(request.getRemoteAddr());
+        return request.getRemoteAddr();
     }
 }
