@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 //@EnableRabbit
 @SpringBootApplication
 //@RestController
@@ -22,6 +24,7 @@ public class MqApplication {
 
     @RequestMapping(value = "a", method = RequestMethod.GET)
     public String a() {
+        ReentrantLock reentrantLock = new ReentrantLock();
         System.out.println(1);
         return "sad";
     }
