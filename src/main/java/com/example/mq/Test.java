@@ -5,7 +5,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -77,8 +79,12 @@ public class Test {
 
         System.out.println(s.equals((short) 2));
 
+        Thread thread = new Thread();
 
-        System.out.println(s.equals((short) 1));
+
+        HashMap hashMap = new HashMap();
+        ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
+         System.out.println(s.equals((short) 1));
 
     }
 }

@@ -1,0 +1,6 @@
+# Application Listeners
+org.springframework.context.ApplicationListener=\
+com.example.mq.spring.MyListener
+
+
+
