@@ -4,6 +4,8 @@ import com.example.mq.并发编程.线程池.线程池的test;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * @author 钟金灿
@@ -170,5 +172,10 @@ public class ThreadTest {
         System.out.println(thread2.getState());
 
 //        ConcurrentHashMap
+
+        Executor executor= Executors.newCachedThreadPool();
+        executor.execute(()->{
+
+        });
     }
 }

@@ -1,7 +1,9 @@
 package com.example.mq;
 
 import com.example.mq.mq.direct.R;
+import com.google.common.collect.Lists;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,30 +87,25 @@ public class Test {
     }
 
 
-
-
-
-    }
-
     public Integer add1(Integer a) {
         a = a + 1;
         return a;
     }
 
     @org.junit.Test
-    public void test233(){
+    public void test233() {
         System.out.println(new BigDecimal("0.00").intValue());
 
     }
 
     @org.junit.Test
-    public void test2333(){
+    public void test2333() {
         Lists.newArrayListWithExpectedSize(12);
 
     }
 
     @org.junit.Test
-    public void test23333(){
+    public void test23333() {
         Short s = (short) 1;
 
 
@@ -119,7 +116,7 @@ public class Test {
 
         HashMap hashMap = new HashMap();
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
-         System.out.println(s.equals((short) 1));
+        System.out.println(s.equals((short) 1));
 
     }
 
