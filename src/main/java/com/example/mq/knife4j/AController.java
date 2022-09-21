@@ -1,8 +1,12 @@
 package com.example.mq.knife4j;
 
+import com.example.mq.kafka.KafkaProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 /**
  * @author 钟金灿
@@ -21,5 +25,14 @@ public class AController {
     @ApiOperation("get")
     public String get(A a) {
         return "asdsd";
+    }
+
+
+    @Autowired
+    private KafkaProvider kafkaProvider;
+    @RequestMapping(value = "sendMsg", method = RequestMethod.GET)
+    public String sendMsg() {
+        kafkaProvider.sendMessage(1L, "1", LocalDateTime.now());
+        return "sad";
     }
 }

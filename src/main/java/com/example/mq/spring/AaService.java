@@ -19,10 +19,10 @@ public class AaService implements BeanNameAware {
 
     public String sd = "aa";
 
-    public AaService(BbService bbService) {
-
-
-    }
+    //public AaService(BbService bbService) {
+    //
+    //
+    //}
 
 
     @Async

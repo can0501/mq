@@ -7,6 +7,22 @@ spring:
     password: guest
   profiles:
     active: dev
+  kafka:
+    # 指定 kafka 地址，我这里在本地，直接就 localhost, 若外网地址，注意修改【PS: 可以指定多个】
+    bootstrap-servers: 8.129.191.227:9092
+    consumer:
+      # 指定 group_id
+      group-id: group_id
+      auto-offset-reset: earliest
+      # 指定消息key和消息体的编解码方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+    producer:
+      # 指定消息key和消息体的编解码方式
+      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
+      value-deserializer: org.apache.kafka.common.serialization.StringSerializer
+
 
 xxl:
   job:
@@ -19,7 +35,7 @@ xxl:
       ip: ''
       logpath: /data/applogs/xxl-job/jobhandler
       logretentiondays: 30
-      port: 4199
+
 
 
 

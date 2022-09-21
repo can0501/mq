@@ -2,13 +2,17 @@
 
 package com.example.mq;
 
+import com.example.mq.kafka.KafkaProvider;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.locks.ReentrantLock;
 
 //@EnableRabbit
@@ -35,6 +39,8 @@ public class MqApplication {
         System.out.println(1);
         return "sad";
     }
+
+
 
 
 }

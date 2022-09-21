@@ -1,22 +1,17 @@
 package com.example.mq;
 
-import com.example.mq.mq.direct.R;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
-import java.util.StringTokenizer;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
@@ -118,6 +113,39 @@ public class Test {
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
         System.out.println(s.equals((short) 1));
 
+
     }
 
+    @org.junit.Test
+    public void sad(){
+
+
+        Map<String, String> sddd = new LinkedHashMap<>();
+        sddd.put("b", "123123");
+        sddd.put("a", "123123");
+        System.out.println(JSON.toJSONString(sddd));
+
+        Map<String, String> sddd2 = new LinkedHashMap<>();
+        sddd.put("a", "123123");
+        sddd.put("b", "123123");
+
+        System.out.println(JSON.toJSONString(sddd));
+
+        A a = new A();
+        a.setA("a");
+        a.setB("b");
+        System.out.println(JSON.toJSONString(a));
+
+    }
+
+
+    /**
+     * @author 钟金灿
+     * @since 2022/9/19
+     */
+    @Data
+    public static class A   {
+        private String b;
+        private String a;
+    }
 }
