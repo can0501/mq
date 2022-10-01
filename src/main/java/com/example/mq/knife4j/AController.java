@@ -30,9 +30,14 @@ public class AController {
 
     @Autowired
     private KafkaProvider kafkaProvider;
+
     @RequestMapping(value = "sendMsg", method = RequestMethod.GET)
     public String sendMsg() {
-        kafkaProvider.sendMessage(1L, "1", LocalDateTime.now());
+
+        for (int i = 0; i < 600; i++) {
+
+            kafkaProvider.sendMessage(1L, "1", LocalDateTime.now());
+        }
         return "sad";
     }
 }

@@ -2,9 +2,12 @@ package com.example.mq.kafka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.common.protocol.Message;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author 犬小哈（公众号：小哈学Java）
@@ -17,9 +20,11 @@ import org.springframework.stereotype.Component;
 public class KafkaConsumer {
 
     @KafkaListener(topics = "xiaoha", groupId = "group_id")
-    public void consume(String record, Acknowledgment ack) {
+    public void consume(List<String> record, Acknowledgment ack) {
         //log.info("## consume message: topic {} offset {}", record.topic(),record.offset());
-        log.info("kafka consume:{}", record);
-        ack.acknowledge();
+        final String message = record.get(0);
+
+        log.info("kafka consume:{}  [{}]", record.size(),record);
+        //ack.acknowledge();
     }
 }
