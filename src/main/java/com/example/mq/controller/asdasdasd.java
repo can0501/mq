@@ -54,4 +54,41 @@ public class asdasdasd {
         System.out.println(request.getRemoteAddr());
         return request.getRemoteAddr();
     }
+
+
+    @GetMapping("c")
+    public String c() {
+
+        System.out.println("aspect");
+//        if (1 == 1) {
+//            throw new RuntimeException("asdasdas");
+//        }
+
+        return extracted();
+    }
+
+
+    private String extracted() {
+        Thread thread = new Thread(() -> {
+            System.out.println("1");
+
+            Thread thread1 = new Thread(() -> {
+                System.out.println("2");
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("2222");
+            });
+            thread1.setDaemon(true);
+
+            thread1.start();
+
+            System.out.println("111111");
+        });
+        thread.setDaemon(true);
+        thread.start();
+        return "sdsds";
+    }
 }
