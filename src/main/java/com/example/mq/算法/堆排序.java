@@ -11,8 +11,8 @@ import java.util.Arrays;
 public class 堆排序 {
     public static void buildTree(int[] t, int start, int end) {
         int tmp = t[start];
-        for (int i = 2 * start + 1; i < end; i = 2 * start + 1) {
-            if (i <= end && i + 1 <= end && t[i] < t[i + 1]) {
+        for (int i = 2 * start + 1; i <= end; i = 2 * start + 1) {
+            if (i < end  && t[i] < t[i + 1]) {
                 i++;
             }
             if (t[i] > tmp) {
@@ -27,7 +27,7 @@ public class 堆排序 {
 
     public static void heapSort(int[] t, int end) {
         for (int i = end / 2 - 1; i >= 0; i--) {
-            buildTree(t, i, end);
+            buildTree(t, i, end-1);
         }
 
 
@@ -47,7 +47,13 @@ public class 堆排序 {
 
     @Test
     public void te() {
-        int p[] = new int[]{5, 4, 3, 2, 1};
+        //int p[] = new int[]{1,2};
+        //int p[] = new int[]{1,2,3};
+        //int p[] = new int[]{2,1};
+        //int p[] = new int[]{3,2,1};
+        //int p[] = new int[]{1,2,3,4};
+        int p[] = new int[]{4,3,2,1,5};
+
         heapSort(p, p.length);
 
         Arrays.stream(p).forEach(System.out::println);
